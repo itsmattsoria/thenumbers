@@ -11,6 +11,7 @@
   <ag-grid-vue
     style="width: 100%; height: 800px"
     class="ag-theme-alpine"
+    :theme="theme"
     :columnDefs="columnDefs"
     :autoSizeStrategy="autoSizeStrategy"
     :rowData="rowData"
@@ -24,15 +25,33 @@
 <script setup>
 import { ref } from 'vue';
 import { AgGridVue } from 'ag-grid-vue3';
-import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+import {
+  ModuleRegistry,
+  themeAlpine,
+  AllCommunityModule,
+} from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const gridApi = ref(null);
 const quickFilterText = ref('');
+// Theme
+const myTheme = themeAlpine.withParams({
+  fontFamily: 'Space Mono',
+});
+const theme = myTheme;
 
+// Column Setup/Functionality
+const linkRenderer = params => {
+  return `<a href="${params.value}" target="_blank">${params.value}</a>`;
+};
 const columnDefs = ref([
-  { headerName: 'Title', field: 'Movie Title', pinned: 'left' },
+  {
+    headerName: 'Title',
+    field: 'Movie Title',
+    pinned: 'left',
+    cellStyle: { fontWeight: 'bold', fontFamily: 'Forevs', fontSize: '1.2rem' },
+  },
   {
     headerName: 'Kills',
     field: 'Total Kills',
@@ -66,13 +85,16 @@ const columnDefs = ref([
     filter: 'agNumberColumnFilter',
     maxWidth: 80,
   },
-  { headerName: 'Video', field: 'Kill Count Youtube Video URL' },
-  { headerName: 'TMDB', field: 'TMDB URL' },
+  {
+    headerName: 'Video',
+    field: 'Kill Count Youtube Video URL',
+    cellRenderer: linkRenderer,
+  },
+  { headerName: 'TMDB', field: 'TMDB URL', cellRenderer: linkRenderer },
   { field: 'Type', filter: 'agTextColumnFilter' },
   { field: 'Franchise', filter: 'agTextColumnFilter' },
   { field: 'Tags', filter: 'agTextColumnFilter' },
 ]);
-
 const autoSizeStrategy = {
   type: 'fitCellContents',
   defaultMinWidth: 80,
@@ -97,6 +119,13 @@ function onSelectionChanged(event) {
   console.log('selection changed, ' + rowCount + ' rows selected');
 }
 
+// Quick Filter
+const onQuickFilterChanged = () => {
+  if (gridApi.value) {
+    gridApi.value.setGridOption('quickFilterText', quickFilterText.value);
+  }
+};
+
 const onGridReady = params => {
   gridApi.value = params.api;
 
@@ -109,12 +138,5 @@ const onGridReady = params => {
       // Catch any errors that occurred during the fetch operation or in the .then() blocks
       console.error('There was a problem with the fetch operation:', error);
     });
-};
-
-// Quick Filter
-const onQuickFilterChanged = () => {
-  if (gridApi.value) {
-    gridApi.value.setGridOption('quickFilterText', quickFilterText.value);
-  }
 };
 </script>
