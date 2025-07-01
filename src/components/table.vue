@@ -13,6 +13,8 @@
     class="ag-theme-alpine"
     :theme="theme"
     :columnDefs="columnDefs"
+    :tooltipShowDelay="tooltipShowDelay"
+    :tooltipShowMode="tooltipShowMode"
     :autoSizeStrategy="autoSizeStrategy"
     :rowData="rowData"
     :rowSelection="rowSelection"
@@ -29,9 +31,10 @@ import {
   ModuleRegistry,
   themeAlpine,
   AllCommunityModule,
+  TooltipModule,
 } from 'ag-grid-community';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+ModuleRegistry.registerModules([AllCommunityModule, TooltipModule]);
 
 const gridApi = ref(null);
 const quickFilterText = ref('');
@@ -43,18 +46,21 @@ const theme = myTheme;
 
 // Column Setup/Functionality
 const linkRenderer = params => {
-  return `<a href="${params.value}" target="_blank">${params.value}</a>`;
+  console.log(params);
+  return `<a href="${params.value}" target="_blank">${params.colDef.field}</a>`;
 };
 const columnDefs = ref([
   {
     headerName: 'Title',
     field: 'Movie Title',
+    tooltipField: 'Movie Title',
     pinned: 'left',
     cellStyle: { fontWeight: 'bold', fontFamily: 'Forevs', fontSize: '1.2rem' },
   },
   {
     headerName: 'Kills',
     field: 'Total Kills',
+    tooltipField: 'Total Kills',
     filter: 'agNumberColumnFilter',
   },
   { headerName: 'Male', field: 'Male Kills' },
@@ -64,18 +70,21 @@ const columnDefs = ref([
   {
     headerName: 'Rate',
     field: 'Kill Rate',
+    tooltipField: 'Kill Rate',
     filter: 'agNumberColumnFilter',
     maxWidth: 80,
   },
   {
     headerName: 'Runtime/Ep.',
     field: 'Runtime/Episodes',
+    tooltipField: 'Runtime/Episodes',
     filter: 'agNumberColumnFilter',
     maxWidth: 80,
   },
   {
     headerName: 'Genres',
     field: 'Subgenre',
+    tooltipField: 'Subgenre',
     filter: 'agTextColumnFilter',
     maxWidth: 80,
   },
@@ -87,14 +96,20 @@ const columnDefs = ref([
   },
   {
     headerName: 'Video',
-    field: 'Kill Count Youtube Video URL',
+    field: 'YouTube',
     cellRenderer: linkRenderer,
   },
-  { headerName: 'TMDB', field: 'TMDB URL', cellRenderer: linkRenderer },
-  { field: 'Type', filter: 'agTextColumnFilter' },
-  { field: 'Franchise', filter: 'agTextColumnFilter' },
-  { field: 'Tags', filter: 'agTextColumnFilter' },
+  { field: 'TMDB', cellRenderer: linkRenderer },
+  { field: 'Type', tooltipField: 'Type', filter: 'agTextColumnFilter' },
+  {
+    field: 'Franchise',
+    tooltipField: 'Franchise',
+    filter: 'agTextColumnFilter',
+  },
+  { field: 'Tags', tooltipField: 'Tags', filter: 'agTextColumnFilter' },
 ]);
+const tooltipShowDelay = ref(500);
+const tooltipShowMode = ref('whenTruncated');
 const autoSizeStrategy = {
   type: 'fitCellContents',
   defaultMinWidth: 80,
