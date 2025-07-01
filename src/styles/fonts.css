@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Forevs';
+  src: url('/fonts/Forevs-Bold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: fallback;
+}

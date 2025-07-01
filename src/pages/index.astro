@@ -1,11 +1,56 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
+const deadMeatLogo = '/images/dead-meat-logo.png';
+import Table from '../components/Table.vue';
 ---
 
 <Layout>
-	<Welcome />
+	<header>
+		<h1 class="container-fill-text">
+			<span class="container-fill-text__container">
+				<span class="container-fill-text__display">The Numbers</span>
+			</span>
+			<span class="container-fill-text__reference" aria-hidden="true">The Numbers</span>
+		</h1>
+		
+		<div class="tagline font-display container-fill-text">
+			<span class="container-fill-text__container">
+				<span class="container-fill-text__display">A <Image src={deadMeatLogo} alt="" width="300" height="171" /> Kill Count fan site</span>
+			</span>
+			<span class="container-fill-text__reference" aria-hidden="true">A <Image src={deadMeatLogo} alt="" width="300" height="171" /> Kill Count fan site</span>
+		</div>
+	</header>
+
+	<Table client:load /> 
 </Layout>
+
+<style>
+	header {
+		padding-block: 2rem;
+		border-top: 3px solid black;
+		border-bottom: 3px solid black;
+	}
+
+	h1,
+	.tagline {
+		margin: 0;
+		line-height: 1;
+		text-align: center;
+		text-box-trim: trim-both;
+
+		span {
+			text-wrap: balance;
+		}
+	}
+
+	.tagline {
+		padding-inline: 10vw;
+		img {
+			width: auto;
+			height: 1em;
+			transform: translateY(5%);
+		}
+	}
+</style>
