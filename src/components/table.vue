@@ -1,6 +1,6 @@
 <template>
-  <div class="example-header">
-    <span>Filter:</span>
+  <div class="filter-container">
+    <span class="bold">Filter:</span>
     <input
       type="text"
       v-model="quickFilterText"
@@ -36,6 +36,12 @@ import {
 
 ModuleRegistry.registerModules([AllCommunityModule, TooltipModule]);
 
+const props = defineProps({
+  killCountData: {
+    type: Object,
+    required: true,
+  },
+});
 const gridApi = ref(null);
 const quickFilterText = ref('');
 // Theme
@@ -46,7 +52,6 @@ const theme = myTheme;
 
 // Column Setup/Functionality
 const linkRenderer = params => {
-  console.log(params);
   return `<a href="${params.value}" target="_blank">${params.colDef.field}</a>`;
 };
 const columnDefs = ref([
@@ -116,7 +121,7 @@ const autoSizeStrategy = {
 };
 
 // Row Setup/Functionality
-const rowData = ref(null);
+const rowData = props.killCountData.slice(0, -1);
 const rowSelection = {
   mode: 'multiRow',
   enableClickSelection: true,
@@ -143,15 +148,17 @@ const onQuickFilterChanged = () => {
 
 const onGridReady = params => {
   gridApi.value = params.api;
-
-  const updateData = data => (rowData.value = data);
-
-  fetch('https://share.mattsoria.com/movie_kill_counts_07-01-25.json')
-    .then(resp => resp.json())
-    .then(data => updateData(data))
-    .catch(error => {
-      // Catch any errors that occurred during the fetch operation or in the .then() blocks
-      console.error('There was a problem with the fetch operation:', error);
-    });
 };
 </script>
+
+<style scoped>
+.filter-container {
+  padding-block: 1rem;
+
+  input {
+    font-size: 1rem;
+    padding: 0.5rem;
+    font-weight: 700;
+  }
+}
+</style>

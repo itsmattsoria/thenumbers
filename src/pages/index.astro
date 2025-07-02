@@ -2,8 +2,26 @@
 import { Image } from 'astro:assets';
 
 import Layout from '../layouts/Layout.astro';
+import Chart from '../components/chart.vue';
+import Stats from '../components/stats.vue';
 import Table from '../components/table.vue';
 const deadMeatLogo = '/images/dead-meat-logo.png';
+
+const killCountResponse = await fetch("https://share.mattsoria.com/movie_kill_counts_07-01-25.json");
+const killCountData = await killCountResponse.json();
+const totalData = killCountData.pop();
+const chartData = {
+  labels: ['Male', 'Female', 'Unknown', 'Non-Human'],
+	datasets: [{
+			data: [totalData['Male Kills'], totalData['Female Kills'], totalData['Unknown Kills'], totalData['Non-human Kills']],
+			backgroundColor: [
+					'#1D1EC9',
+					'#DF1A19',
+					'#6E6E6E',
+					'#06D648'
+			],
+	}],
+};
 ---
 
 <Layout>
@@ -23,7 +41,15 @@ const deadMeatLogo = '/images/dead-meat-logo.png';
 		</div>
 	</header>
 
-	<Table client:load /> 
+	<div class="chart-header">
+		<div class="chart-container">
+			<Chart client:load chartData={chartData} /> 
+		</div>
+		<div class="stat-container">
+			<Stats client:load totalKills={totalData['Total Kills']} maleKills={totalData['Male Kills']} femaleKills={totalData['Female Kills']} unknownKills={totalData['Unknown Gender Kills']} nonHumanKills={totalData['Non-human Kills']} />
+		</div>
+	</div>
+	<Table client:load killCountData={killCountData} /> 
 </Layout>
 
 <style>
@@ -46,11 +72,24 @@ const deadMeatLogo = '/images/dead-meat-logo.png';
 	}
 
 	.tagline {
+		--container-fill-text-max-font-size: 3rem;
 		padding-inline: 10vw;
 		img {
 			width: auto;
 			height: 1em;
 			transform: translateY(5%);
 		}
+	}
+
+	.chart-header {
+		display: grid;
+		padding-block: 2rem;
+		grid-template-columns: repeat(12, 1fr);
+	}
+	.chart-container {
+		grid-column: 1 / 6;
+	}
+	.stat-container {
+		grid-column: 6 / 13;
 	}
 </style>
