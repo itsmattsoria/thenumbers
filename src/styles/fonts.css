@@ -5,3 +5,11 @@
   font-style: normal;
   font-display: fallback;
 }
+
+@font-face {
+  font-family: 'DNK';
+  src: url('/fonts/dnk.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: fallback;
+}

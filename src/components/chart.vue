@@ -18,6 +18,21 @@ import { Pie } from 'vue-chartjs';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+ChartJS.defaults.plugins.tooltip.titleFont = () => ({
+  family: 'Space Mono',
+  size: 14,
+  lineHeight: 1.2,
+});
+ChartJS.defaults.plugins.tooltip.bodyFont = () => ({
+  family: 'DNK',
+  size: 36,
+  lineHeight: 1.2,
+});
+ChartJS.defaults.plugins.tooltip.backgroundColor = '#ffffff';
+ChartJS.defaults.plugins.tooltip.bodyColor = '#000000';
+ChartJS.defaults.plugins.tooltip.titleColor = '#000000';
+ChartJS.defaults.plugins.tooltip.displayColors = false;
+
 export default {
   name: 'Kill Count Pie',
   components: { Pie },
@@ -26,6 +41,9 @@ export default {
   plugins: {
     legend: {
       position: 'top',
+    },
+    tooltip: {
+      enabled: true,
     },
     title: {
       display: true,

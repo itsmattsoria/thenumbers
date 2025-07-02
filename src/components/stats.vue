@@ -1,10 +1,20 @@
 <template>
   <div class="stats-wrapper">
-    <div>Total Kills: {{ totalKills }}</div>
-    <div>Male: {{ maleKills }}</div>
-    <div>Female: {{ femaleKills }}</div>
-    <div>Unknown: {{ unknownKills }}</div>
-    <div>Non-human: {{ nonHumanKills }}</div>
+    <div>
+      Total Kills: <span class="font-dnk color-dm-red">{{ totalKills }}</span>
+    </div>
+    <div>
+      Male: <span class="font-dnk color-dm-red">{{ maleKills }}</span>
+    </div>
+    <div>
+      Female: <span class="font-dnk color-dm-red">{{ femaleKills }}</span>
+    </div>
+    <div>
+      Unknown: <span class="font-dnk color-dm-red">{{ unknownKills }}</span>
+    </div>
+    <div>
+      Non-human: <span class="font-dnk color-dm-red">{{ nonHumanKills }}</span>
+    </div>
   </div>
 </template>
 

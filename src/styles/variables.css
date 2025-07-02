@@ -1,0 +1,7 @@
+:root {
+  --color-dm-red: #c41415;
+}
+
+.color-dm-red {
+  color: var(--color-dm-red);
+}
