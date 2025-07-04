@@ -28,6 +28,18 @@ const chartData = ref({
     {
       backgroundColor: ['#1D1EC9', '#DF1A19', '#6E6E6E', '#06D648'],
       data: [200, 40, 50, 60],
+      datalabels: {
+        font: {
+          family: 'DNK',
+          size: '60rem',
+        },
+        color: '#ffffff',
+        // opacity: function (context) {
+        //   var index = context.dataIndex;
+        //   var value = context.dataset.data[index];
+        //   return value < 0 ? 0 : 1;
+        // },
+      },
     },
   ],
 });

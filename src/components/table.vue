@@ -130,7 +130,7 @@ const autoSizeStrategy = {
 };
 
 // Row Setup/Functionality
-const rowData = props.killCountData.slice(0, -1);
+const rowData = props.killCountData;
 const rowSelection = {
   mode: 'multiRow',
   enableClickSelection: true,

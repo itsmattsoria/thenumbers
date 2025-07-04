@@ -9,10 +9,11 @@ import { ref } from 'vue';
 import { useChartData } from '../composables/useSharedState';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'vue-chartjs';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const totalData = ref(null);
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 ChartJS.defaults.plugins.tooltip.titleFont = () => ({
   family: 'Space Mono',
@@ -39,13 +40,6 @@ const chartOptions = {
   plugins: {
     legend: {
       position: 'top',
-    },
-    tooltip: {
-      enabled: true,
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Pie Chart',
     },
   },
 };

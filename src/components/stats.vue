@@ -2,22 +2,27 @@
   <div class="stats-wrapper">
     <div>
       Total Kills:
-      <span class="font-dnk color-dm-red">{{ kills.total }}</span>
+      <span class="stat-numbers font-dnk color-dm-red">{{ kills.total }}</span>
     </div>
     <div>
-      Male: <span class="font-dnk color-dm-red">{{ kills.male }}</span>
+      Male:
+      <span class="stat-numbers font-dnk color-dm-red">{{ kills.male }}</span>
     </div>
     <div>
       Female:
-      <span class="font-dnk color-dm-red">{{ kills.female }}</span>
+      <span class="stat-numbers font-dnk color-dm-red">{{ kills.female }}</span>
     </div>
     <div>
       Unknown:
-      <span class="font-dnk color-dm-red">{{ kills.unknown }}</span>
+      <span class="stat-numbers font-dnk color-dm-red">{{
+        kills.unknown
+      }}</span>
     </div>
     <div>
       Non-human:
-      <span class="font-dnk color-dm-red">{{ kills.nonHuman }}</span>
+      <span class="stat-numbers font-dnk color-dm-red">{{
+        kills.nonHuman
+      }}</span>
     </div>
   </div>
 </template>
@@ -39,5 +44,8 @@ export default {
 .stats-wrapper {
   font-size: 2rem;
   font-weight: bold;
+}
+.stat-numbers {
+  font-size: 1.5em;
 }
 </style>

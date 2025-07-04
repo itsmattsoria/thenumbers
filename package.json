@@ -15,6 +15,7 @@
     "ag-grid-vue3": "^34.0.0",
     "astro": "^5.10.1",
     "chart.js": "^4.5.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "nanostores": "^1.0.1",
     "vue": "^3.5.17",
     "vue-chartjs": "^5.3.2"
