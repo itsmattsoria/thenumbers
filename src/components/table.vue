@@ -1,31 +1,35 @@
 <template>
-  <div class="filter-container">
-    <span class="bold">Filter:</span>
-    <input
-      type="text"
-      v-model="quickFilterText"
-      @input="onQuickFilterChanged"
-      placeholder="ex: scream"
-    />
+  <div>
+    <div class="filter-container">
+      <span class="bold">Filter:</span>
+      <input
+        type="text"
+        v-model="quickFilterText"
+        @input="onQuickFilterChanged"
+        placeholder="ex: scream"
+      />
+    </div>
+    <ag-grid-vue
+      style="width: 100%; height: 800px"
+      class="ag-theme-alpine"
+      :theme="theme"
+      :columnDefs="columnDefs"
+      :tooltipShowDelay="tooltipShowDelay"
+      :tooltipShowMode="tooltipShowMode"
+      :autoSizeStrategy="autoSizeStrategy"
+      :rowData="rowData"
+      :rowSelection="rowSelection"
+      @row-selected="onRowSelected"
+      @selection-changed="onSelectionChanged"
+      @filter-changed="onFilterChanged"
+      @grid-ready="onGridReady"
+    ></ag-grid-vue>
   </div>
-  <ag-grid-vue
-    style="width: 100%; height: 800px"
-    class="ag-theme-alpine"
-    :theme="theme"
-    :columnDefs="columnDefs"
-    :tooltipShowDelay="tooltipShowDelay"
-    :tooltipShowMode="tooltipShowMode"
-    :autoSizeStrategy="autoSizeStrategy"
-    :rowData="rowData"
-    :rowSelection="rowSelection"
-    @row-selected="onRowSelected"
-    @selection-changed="onSelectionChanged"
-    @grid-ready="onGridReady"
-  ></ag-grid-vue>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { updateKills, useChartData } from '../composables/useSharedState';
 import { AgGridVue } from 'ag-grid-vue3';
 import {
   ModuleRegistry,
@@ -36,14 +40,19 @@ import {
 
 ModuleRegistry.registerModules([AllCommunityModule, TooltipModule]);
 
+const { updateChartData } = useChartData();
+
 const props = defineProps({
   killCountData: {
     type: Object,
     required: true,
   },
 });
+
 const gridApi = ref(null);
+const gridColumnApi = ref(null);
 const quickFilterText = ref('');
+
 // Theme
 const myTheme = themeAlpine.withParams({
   fontFamily: 'Space Mono',
@@ -88,14 +97,14 @@ const columnDefs = ref([
   },
   {
     headerName: 'Genres',
-    field: 'Subgenre',
+    field: 'Genres',
     tooltipField: 'Subgenre',
     filter: 'agTextColumnFilter',
     maxWidth: 80,
   },
   {
     headerName: 'Year',
-    field: 'Release Year',
+    field: 'Year',
     filter: 'agNumberColumnFilter',
     maxWidth: 80,
   },
@@ -148,6 +157,69 @@ const onQuickFilterChanged = () => {
 
 const onGridReady = params => {
   gridApi.value = params.api;
+  gridColumnApi.value = params.columnApi;
+  if (gridApi.value) {
+    calculateOnLoadSum();
+  }
+};
+const onFilterChanged = event => {
+  // Check if gridApi is available before calculating
+  if (gridApi.value) {
+    calculateFilteredSum();
+  }
+};
+// Add up totals of on ready results
+const calculateOnLoadSum = () => {
+  const rows = [];
+  gridApi.value.forEachNode(node => {
+    rows.push(node.data);
+  });
+  // Now 'rows' contains only the visible data
+  calculateSum(rows);
+};
+// Add up totals of filtered results
+const calculateFilteredSum = () => {
+  const filteredRows = [];
+  gridApi.value.forEachNodeAfterFilter(node => {
+    filteredRows.push(node.data);
+  });
+  // Now 'filteredRows' contains only the visible data
+  calculateSum(filteredRows);
+};
+const calculateSum = data => {
+  let killSums = {
+    total: 0,
+    male: 0,
+    female: 0,
+    unknown: 0,
+    nonHuman: 0,
+  };
+  let chartSums = [0, 0, 0, 0];
+  data.forEach(row => {
+    // Replace 'yourColumnField' with the actual field name of the column you want to sum
+    if (typeof row['Total Kills'] === 'number') {
+      killSums.total += row['Total Kills'];
+    }
+    if (typeof row['Male Kills'] === 'number') {
+      killSums.male += row['Male Kills'];
+      chartSums[0] = chartSums[0] + row['Male Kills'];
+    }
+    if (typeof row['Female Kills'] === 'number') {
+      killSums.female += row['Female Kills'];
+      chartSums[1] = chartSums[1] + row['Female Kills'];
+    }
+    if (typeof row['Unknown Gender Kills'] === 'number') {
+      killSums.unknown += row['Unknown Gender Kills'];
+      chartSums[2] = chartSums[2] + row['Unknown Gender Kills'];
+    }
+    if (typeof row['Non-human Kills'] === 'number') {
+      killSums.nonHuman += row['Non-human Kills'];
+      chartSums[3] = chartSums[3] + row['Non-human Kills'];
+    }
+  });
+  // Now 'totalSum' holds the sum of the filtered column
+  updateKills(killSums); // Call a method to display the sum
+  updateChartData(chartSums);
 };
 </script>
 

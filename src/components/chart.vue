@@ -4,17 +4,13 @@
   </div>
 </template>
 
-<script>
-import { useStore } from '@nanostores/vue';
-import {
-  $totalKills,
-  $maleKills,
-  $femaleKills,
-  $unknownKills,
-  $nonHumanKills,
-} from '../stores/kills.js';
+<script setup>
+import { ref } from 'vue';
+import { useChartData } from '../composables/useSharedState';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'vue-chartjs';
+
+const totalData = ref(null);
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,7 +29,9 @@ ChartJS.defaults.plugins.tooltip.bodyColor = '#000000';
 ChartJS.defaults.plugins.tooltip.titleColor = '#000000';
 ChartJS.defaults.plugins.tooltip.displayColors = false;
 
-export default {
+const { chartData } = useChartData();
+
+const chartOptions = {
   name: 'Kill Count Pie',
   components: { Pie },
   responsive: true,
@@ -48,12 +46,6 @@ export default {
     title: {
       display: true,
       text: 'Chart.js Pie Chart',
-    },
-  },
-  props: {
-    chartData: {
-      type: Object,
-      required: true,
     },
   },
 };

@@ -10,18 +10,6 @@ const deadMeatLogo = '/images/dead-meat-logo.png';
 const killCountResponse = await fetch("https://share.mattsoria.com/movie_kill_counts_07-01-25.json");
 const killCountData = await killCountResponse.json();
 const totalData = killCountData.pop();
-const chartData = {
-  labels: ['Male', 'Female', 'Unknown', 'Non-Human'],
-	datasets: [{
-			data: [totalData['Male Kills'], totalData['Female Kills'], totalData['Unknown Gender Kills'], totalData['Non-human Kills']],
-			backgroundColor: [
-					'#1D1EC9',
-					'#DF1A19',
-					'#6E6E6E',
-					'#06D648'
-			],
-	}],
-};
 ---
 
 <Layout>
@@ -43,10 +31,10 @@ const chartData = {
 
 	<div class="chart-header">
 		<div class="chart-container">
-			<Chart client:load chartData={chartData} /> 
+			<Chart client:load totalData={totalData} /> 
 		</div>
 		<div class="stat-container">
-			<Stats client:load totalKills={totalData['Total Kills']} maleKills={totalData['Male Kills']} femaleKills={totalData['Female Kills']} unknownKills={totalData['Unknown Gender Kills']} nonHumanKills={totalData['Non-human Kills']} />
+			<Stats client:load />
 		</div>
 	</div>
 	<Table client:load killCountData={killCountData} /> 

@@ -1,10 +1,12 @@
-import { atom } from 'nanostores';
+import { reactive } from 'vue';
 
-export const $totalKills = atom(0);
-export const $maleKills = atom(0);
-export const $femaleKills = atom(0);
-export const $unknownKills = atom(0);
-export const $nonHumanKills = atom(0);
+export const kills = reactive({
+  total: 0,
+  male: 0,
+  female: 0,
+  unknown: 0,
+  nonHuman: 0,
+});
 
 export const $emesisBlueKills = {
   'Movie Title': 'Emesis Blue',
