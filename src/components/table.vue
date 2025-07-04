@@ -135,17 +135,11 @@ const rowSelection = {
   mode: 'multiRow',
   enableClickSelection: true,
 };
-function onRowSelected(event) {
-  console.log(
-    'row ' +
-      event.node.data['Movie Title'] +
-      ' selected = ' +
-      event.node.isSelected()
-  );
+function onRowSelected() {
+  calculateSelectedSum();
 }
-function onSelectionChanged(event) {
-  const rowCount = event.selectedNodes?.length;
-  console.log('selection changed, ' + rowCount + ' rows selected');
+function onSelectionChanged() {
+  calculateSelectedSum();
 }
 
 // Quick Filter
@@ -185,6 +179,16 @@ const calculateFilteredSum = () => {
   });
   // Now 'filteredRows' contains only the visible data
   calculateSum(filteredRows);
+};
+// Add up totals of selected results
+const calculateSelectedSum = () => {
+  const selectedRows = [];
+  const nodesToUpdate = gridApi.value.getSelectedNodes();
+  nodesToUpdate.forEach(node => {
+    selectedRows.push(node.data);
+  });
+  // Now 'selectedRows' contains only the visible data
+  calculateSum(selectedRows);
 };
 const calculateSum = data => {
   let killSums = {
