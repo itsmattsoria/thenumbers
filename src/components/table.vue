@@ -11,9 +11,9 @@
     </div>
     <ag-grid-vue
       style="width: 100%; height: 800px"
-      class="ag-theme-alpine"
       :theme="theme"
       :columnDefs="columnDefs"
+      :selectionColumnDef="selectionColumnDef"
       :tooltipShowDelay="tooltipShowDelay"
       :tooltipShowMode="tooltipShowMode"
       :autoSizeStrategy="autoSizeStrategy"
@@ -33,9 +33,9 @@ import { updateKills, useChartData } from '../composables/useSharedState';
 import { AgGridVue } from 'ag-grid-vue3';
 import {
   ModuleRegistry,
-  themeAlpine,
   AllCommunityModule,
   TooltipModule,
+  themeQuartz,
 } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule, TooltipModule]);
@@ -54,22 +54,32 @@ const gridColumnApi = ref(null);
 const quickFilterText = ref('');
 
 // Theme
-const myTheme = themeAlpine.withParams({
-  fontFamily: 'Space Mono',
+const myTheme = themeQuartz.withParams({
+  accentColor: '#C41415',
+  browserColorScheme: 'light',
+  columnBorder: true,
+  fontFamily: 'inherit',
+  fontSize: 14,
+  headerColumnBorder: true,
+  headerFontSize: 14,
 });
+
 const theme = myTheme;
 
 // Column Setup/Functionality
 const linkRenderer = params => {
   return `<a href="${params.value}" target="_blank">${params.colDef.field}</a>`;
 };
+const selectionColumnDef = ref({
+  pinned: 'left',
+});
 const columnDefs = ref([
   {
     headerName: 'Title',
     field: 'Movie Title',
     tooltipField: 'Movie Title',
     pinned: 'left',
-    cellStyle: { fontWeight: '700', fontSize: '1.25rem' },
+    cellStyle: { fontWeight: '700', fontSize: '1rem' },
   },
   {
     headerName: 'Kills',
@@ -230,6 +240,9 @@ const calculateSum = data => {
 
 <style scoped>
 .filter-container {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
   padding-block: 1rem;
 
   input {

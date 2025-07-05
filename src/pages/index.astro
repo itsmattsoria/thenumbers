@@ -13,23 +13,18 @@ const totalData = killCountData.pop();
 ---
 
 <Layout>
-	<header>
+	<header class="container">
 		<h1 class="container-fill-text">
-			<span class="container-fill-text__container">
-				<span class="container-fill-text__display">The Numbers</span>
+			<span class="sr-only">The Numbers: A Dead Meat Kill Count Fan Site</span>
+			<span class="container-fill-text__container" aria-hidden="true">
+				<span class="container-fill-text__display"><span class="font-dnk color-dm-red">The Numbers:</span> <br>A <a href="https://www.deadmeat.rip" class="heartBeat"><Image src={deadMeatLogo} alt="" width="300" height="171" /></a> Kill Count fan site</span>
 			</span>
-			<span class="container-fill-text__reference" aria-hidden="true">The Numbers</span>
+			<span class="container-fill-text__reference" aria-hidden="true"><span class="font-dnk">The Numbers:</span> A <a href="https://www.deadmeat.rip" class="heartBeat"><Image src={deadMeatLogo} alt="" width="300" height="171" /></a> Kill Count fan site</span>
 		</h1>
-		
-		<div class="tagline font-display container-fill-text">
-			<span class="container-fill-text__container">
-				<span class="container-fill-text__display">A <a href="https://www.deadmeat.rip" class="heartBeat"><Image src={deadMeatLogo} alt="" width="300" height="171" /></a> Kill Count fan site</span>
-			</span>
-			<span class="container-fill-text__reference" aria-hidden="true">A <Image src={deadMeatLogo} alt="" width="300" height="171" /> Kill Count fan site</span>
-		</div>
+		<p class="tagline">Where we tally up the victims in <strong>all</strong> of Dead Meat's Kill Counts. Search and filter the table to see updated stats.</p>
 	</header>
 
-	<div class="chart-header">
+	<div class="chart-header container">
 		<div class="chart-container">
 			<Chart client:load totalData={totalData} /> 
 		</div>
@@ -37,39 +32,47 @@ const totalData = killCountData.pop();
 			<Stats client:load />
 		</div>
 	</div>
-	<Table client:load killCountData={killCountData} /> 
+	<div class="container">
+		<Table client:load killCountData={killCountData} /> 
+	</div>
 </Layout>
 
 <style>
 	header {
-		padding-block-end: 2rem;
-		border-bottom: 3px solid black;
+		padding-block: 2rem;
 	}
 
 	h1 {
-		--container-fill-text-max-font-size: 5rem;
-	}
-	
-	h1,
-	.tagline {
 		margin: 0;
 		line-height: 1;
-		text-align: center;
 		text-box-trim: trim-both;
+
+		.sr-only {
+			width: 0;
+			height: 0;
+			position: absolute;
+		}
 
 		span {
 			text-wrap: balance;
 		}
-	}
-
-	.tagline {
-		--container-fill-text-max-font-size: 3rem;
-		padding-inline: 10vw;
 		img {
 			width: auto;
 			height: 1em;
-			transform: translateY(5%);
+			transform: translateY(10%);
 		}
+
+		br {
+			@media screen and (min-width: 768px) {
+				display: none;
+			}
+		}
+	}
+
+	.tagline {
+		font-size: 1.25rem;
+		text-wrap: balance;
+		margin-block-start: 0.5em;
 	}
 
 	.chart-header {

@@ -1,3 +1,6 @@
 :root {
   /* --ag-header-background-color: blue; */
 }
+.ag-cell a {
+  color: var(--color-dm-red);
+}
