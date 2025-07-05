@@ -60,8 +60,11 @@ const myTheme = themeQuartz.withParams({
   columnBorder: true,
   fontFamily: 'inherit',
   fontSize: 14,
+  headerBackgroundColor: '#F1F1F1',
+  headerFontWeight: 700,
   headerColumnBorder: true,
   headerFontSize: 14,
+  oddRowBackgroundColor: '#F1F1F1',
 });
 
 const theme = myTheme;
@@ -247,7 +250,7 @@ const calculateSum = data => {
 
   input {
     font-size: 1rem;
-    padding: 0.5rem;
+    padding: 0.25rem;
     font-weight: 700;
   }
 }

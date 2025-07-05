@@ -18,7 +18,7 @@ import "../styles/fonts.css";
 	<body>
 		<slot />
 
-		<footer>
+		<footer class="container">
 			<div>
 				<h2>About</h2>
 				<p>This site was built by me, <a href="https://www.mattsoria.com">Matt Soria</a>👋. I'm a big fan of Dead meat and The Kill Count, and I also know how to build websites, so I built this site for fun. I have no affiliation with Dead Meat, but if they see this, I hope they dig it, and I hope you do too, fellow horror nerd.</p>
@@ -36,13 +36,12 @@ import "../styles/fonts.css";
 	}
 
 	footer {
-		padding: 2rem 0 4rem;
+		padding-block: 2rem 4rem;
 		margin-block-start: 5rem;
 		color: var(--color-white);
 		background-color: var(--color-black);
 
 		> div {
-			margin: 0 auto;
 			max-width: 65ch;
 			text-wrap: pretty;
 		}
