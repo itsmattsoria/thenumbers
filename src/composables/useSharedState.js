@@ -34,11 +34,9 @@ const chartData = ref({
           size: '60rem',
         },
         color: '#ffffff',
-        // opacity: function (context) {
-        //   var index = context.dataIndex;
-        //   var value = context.dataset.data[index];
-        //   return value < 0 ? 0 : 1;
-        // },
+        formatter: value => {
+          return value > 0 ? value : '';
+        },
       },
     },
   ],

@@ -182,13 +182,14 @@ const calculateFilteredSum = () => {
 };
 // Add up totals of selected results
 const calculateSelectedSum = () => {
-  const selectedRows = [];
+  let selectedRows = [];
   const nodesToUpdate = gridApi.value.getSelectedNodes();
-  nodesToUpdate.forEach(node => {
-    selectedRows.push(node.data);
-  });
-  // Now 'selectedRows' contains only the visible data
-  calculateSum(selectedRows);
+  if (nodesToUpdate.length) {
+    nodesToUpdate.forEach(node => {
+      selectedRows.push(node.data);
+    });
+    calculateSum(selectedRows);
+  }
 };
 const calculateSum = data => {
   let killSums = {
@@ -222,7 +223,7 @@ const calculateSum = data => {
     }
   });
   // Now 'totalSum' holds the sum of the filtered column
-  updateKills(killSums); // Call a method to display the sum
+  updateKills(killSums);
   updateChartData(chartSums);
 };
 </script>
