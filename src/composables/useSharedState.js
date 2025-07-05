@@ -26,14 +26,29 @@ const chartData = ref({
   labels: ['Male', 'Female', 'Unknown', 'Non-Human'],
   datasets: [
     {
-      backgroundColor: ['#1D1EC9', '#DF1A19', '#6E6E6E', '#06D648'],
-      data: [200, 40, 50, 60],
+      backgroundColor: ['#1A1ABB', '#DF1A19', '#929292', '#06D648'],
+      data: [1, 1, 1, 1],
+      borderWidth: 0,
       datalabels: {
         font: {
           family: 'DNK',
-          size: '60rem',
+          size: '60',
         },
         color: '#ffffff',
+        anchor: function (context) {
+          let valueCount = 0;
+          const chartDataSet = context.dataset.data;
+          chartDataSet.forEach(set => {
+            if (set > 0) {
+              valueCount++;
+            }
+          });
+          if (valueCount > 1) {
+            return 'center';
+          } else {
+            return 'start';
+          }
+        },
         formatter: value => {
           return value > 0 ? value : '';
         },

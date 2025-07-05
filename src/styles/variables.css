@@ -1,7 +1,27 @@
 :root {
+  --color-black: #222222;
   --color-dm-red: #c41415;
+  --color-chart-blue: #1a1abb;
+  --color-chart-red: #df1a19;
+  --color-chart-gray: #929292;
+  --color-chart-green: #06d648;
 }
 
+.color-black {
+  color: var(--color-black);
+}
 .color-dm-red {
   color: var(--color-dm-red);
+}
+.color-chart-blue {
+  color: var(--color-chart-blue);
+}
+.color-chart-red {
+  color: var(--color-chart-red);
+}
+.color-chart-gray {
+  color: var(--color-chart-gray);
+}
+.color-chart-green {
+  color: var(--color-chart-green);
 }

@@ -23,7 +23,7 @@ const totalData = killCountData.pop();
 		
 		<div class="tagline font-display container-fill-text">
 			<span class="container-fill-text__container">
-				<span class="container-fill-text__display">A <Image src={deadMeatLogo} alt="" width="300" height="171" /> Kill Count fan site</span>
+				<span class="container-fill-text__display">A <a href="https://www.deadmeat.rip" class="heartBeat"><Image src={deadMeatLogo} alt="" width="300" height="171" /></a> Kill Count fan site</span>
 			</span>
 			<span class="container-fill-text__reference" aria-hidden="true">A <Image src={deadMeatLogo} alt="" width="300" height="171" /> Kill Count fan site</span>
 		</div>
@@ -42,11 +42,14 @@ const totalData = killCountData.pop();
 
 <style>
 	header {
-		padding-block: 2rem;
-		border-top: 3px solid black;
+		padding-block-end: 2rem;
 		border-bottom: 3px solid black;
 	}
 
+	h1 {
+		--container-fill-text-max-font-size: 5rem;
+	}
+	
 	h1,
 	.tagline {
 		margin: 0;

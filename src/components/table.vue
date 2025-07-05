@@ -69,7 +69,7 @@ const columnDefs = ref([
     field: 'Movie Title',
     tooltipField: 'Movie Title',
     pinned: 'left',
-    cellStyle: { fontWeight: 'bold', fontFamily: 'Forevs', fontSize: '1.2rem' },
+    cellStyle: { fontWeight: '700', fontSize: '1.25rem' },
   },
   {
     headerName: 'Kills',
